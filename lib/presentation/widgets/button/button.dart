@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
-class ButtonWhite extends StatelessWidget {
+class Button extends StatelessWidget {
   final String label;
   final GestureTapCallback? onTap;
   final bool isDisabled;
+  final Color? colorText;
+  final Color? colorBackground;
 
-  const ButtonWhite({
+  const Button({
     super.key,
     required this.label,
     required this.onTap,
     this.isDisabled = false,
+    required this.colorText,
+    required this.colorBackground,
   });
 
   @override
@@ -21,8 +25,9 @@ class ButtonWhite extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         height: 48,
         decoration: BoxDecoration(
-            color: isDisabled ? neutralTheme[300] : Colors.white,
-            borderRadius: BorderRadius.circular(100)),
+          color: isDisabled ? neutralTheme[300] : colorBackground,
+          borderRadius: BorderRadius.circular(100),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -32,7 +37,7 @@ class ButtonWhite extends StatelessWidget {
               style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
-                  color: isDisabled ? neutralTheme[500] : neutralTheme),
+                  color: isDisabled ? neutralTheme[500] : colorText),
             ),
           ],
         ),

@@ -1,4 +1,6 @@
 import 'package:go_router/go_router.dart';
+import 'package:looksy/presentation/pages/history/historypage.dart';
+import 'package:looksy/presentation/pages/navigation/navigation.dart';
 import 'package:looksy/presentation/pages/onboarding/login.dart';
 import 'package:looksy/presentation/pages/onboarding/onboarding.dart';
 import 'package:looksy/presentation/pages/onboarding/otp.dart';
@@ -23,10 +25,18 @@ final GoRouter _router = GoRouter(
       path: '/login',
       builder: (context, state) => const LoginPage(),
     ),
+    GoRoute(
+      path: '/history',
+      builder: (context, state) => const HistoryPage(),
+    ),
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const NavigationPage(),
+    ),
   ],
   redirect: (context, state) {
     if (state.uri.toString() == '/') {
-      return '/onboarding';
+      return '/home';
     }
     return null;
   },

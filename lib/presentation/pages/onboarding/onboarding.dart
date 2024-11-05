@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:looksy/presentation/utils/theme.dart';
+// import 'package:looksy/presentation/utils/theme.dart';
 import 'package:looksy/presentation/widgets/button/button.dart';
 
 class OnboardingPage extends StatelessWidget {
@@ -48,12 +49,14 @@ class OnboardingPage extends StatelessWidget {
                     const SizedBox(
                       height: 32,
                     ),
-                    ButtonWhite(
+                    Button(
                       label: 'Get Started',
                       onTap: () {
                         context.push('/register');
                       },
                       isDisabled: false,
+                      colorBackground: Colors.white,
+                      colorText: neutralTheme,
                     ),
                   ])
                 ],
