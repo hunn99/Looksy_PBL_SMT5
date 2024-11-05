@@ -1,4 +1,4 @@
-import 'package:ficonsax/ficonsax.dart';
+// import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:looksy/presentation/router/routes.dart';
 import 'package:looksy/presentation/utils/theme.dart';
