@@ -1,6 +1,9 @@
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
+import 'package:looksy/presentation/pages/history/historypage.dart';
 import 'package:looksy/presentation/pages/home/homepage.dart';
+import 'package:looksy/presentation/pages/profile/profile_page.dart';
+import 'package:looksy/presentation/pages/tips/tips.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
 class NavigationPage extends StatefulWidget {
@@ -14,10 +17,10 @@ class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   List<Widget> pages = [
     HomePage(),
-    Text('tipspageeee'),
+    TipsPage(),
     Text('scanpage'),
-    Text('historypage'),
-    Text('profilepage'),
+    HistoryPage(),
+    ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,7 @@ class _NavigationPageState extends State<NavigationPage> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white, // Membuat background transparan
+        backgroundColor: Colors.white,
         currentIndex: _selectedIndex,
         onTap: (index) {
           setState(() {
