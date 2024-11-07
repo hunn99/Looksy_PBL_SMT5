@@ -1,3 +1,4 @@
+import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:looksy/presentation/utils/theme.dart';
@@ -79,7 +80,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 32),
                   TextField(
-                    style: const TextStyle(fontSize: 11),
+                    style: const TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 12,
@@ -99,7 +100,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 12),
                   TextField(
-                    style: const TextStyle(fontSize: 11),
+                    style: const TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 12,
@@ -119,7 +120,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 12),
                   TextField(
-                    style: const TextStyle(fontSize: 11),
+                    style: const TextStyle(fontSize: 16),
                     focusNode: _passwordFocusNode,
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
@@ -140,14 +141,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       suffixIcon: GestureDetector(
                         onTap: _togglePasswordVisibility,
                         child: Icon(
-                          _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          _isPasswordVisible ? IconsaxOutline.eye : IconsaxOutline.eye_slash,
                         ),
                       ),
                     ),
                   ),
                   const SizedBox(height: 12),
                   TextField(
-                    style: const TextStyle(fontSize: 11),
+                    style: const TextStyle(fontSize: 16),
                     focusNode: _confirmPasswordFocusNode,
                     obscureText: !_isConfirmPasswordVisible,
                     decoration: InputDecoration(
@@ -168,7 +169,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       suffixIcon: GestureDetector(
                         onTap: _toggleConfirmPasswordVisibility,
                         child: Icon(
-                          _isConfirmPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          _isConfirmPasswordVisible ? IconsaxOutline.eye : IconsaxOutline.eye_slash,
                         ),
                       ),
                     ),
