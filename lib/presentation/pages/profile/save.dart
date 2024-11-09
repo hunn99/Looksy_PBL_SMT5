@@ -5,37 +5,39 @@ import 'package:looksy/presentation/utils/theme.dart';
 class SavePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: const Text(
-          'Save',
-          style: TextStyle(
-              fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
-        ),
-        backgroundColor: Color(0xFF1b1b1b),
-        foregroundColor: Colors.white,
-        leading: IconButton(
-          icon: const Icon(IconsaxOutline.arrow_left, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-          physics: const BouncingScrollPhysics(),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // Jumlah kolom
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio: 0.75,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: const Text(
+            'Save',
+            style: TextStyle(
+                fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
           ),
-          itemCount: hairstyles.length,
-          itemBuilder: (context, index) {
-            return HairstyleCard(hairstyle: hairstyles[index]);
-          },
+          backgroundColor: Color(0xFF1b1b1b),
+          foregroundColor: Colors.white,
+          leading: IconButton(
+            icon: const Icon(IconsaxOutline.arrow_left, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: GridView.builder(
+            physics: const BouncingScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, // Jumlah kolom
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+              childAspectRatio: 0.75,
+            ),
+            itemCount: hairstyles.length,
+            itemBuilder: (context, index) {
+              return HairstyleCard(hairstyle: hairstyles[index]);
+            },
+          ),
         ),
       ),
     );
