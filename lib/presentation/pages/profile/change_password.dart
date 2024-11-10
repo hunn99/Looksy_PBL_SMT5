@@ -1,5 +1,6 @@
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
+import 'package:looksy/presentation/utils/theme.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   @override
@@ -40,7 +41,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 "Your new password must be different from previous used passwords.",
                 style: TextStyle(
                   fontSize: 16,
-                  color: Color(0xFF1b1b1b),
+                  color: neutralTheme,
                 ),
               ),
               const SizedBox(height: 40),
@@ -50,19 +51,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 decoration: InputDecoration(
                   labelText: "Current Password",
                   labelStyle: TextStyle(
-                    color: Color(0xFFD1D1D1),
+                    color: neutralTheme[200]!,
                   ),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide:
-                        BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
+                        BorderSide(color: neutralTheme[100]!, width: 1.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide:
-                        BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
+                    borderSide: BorderSide(color: neutralTheme, width: 1.5),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -85,19 +85,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 decoration: InputDecoration(
                   labelText: "New Password",
                   labelStyle: TextStyle(
-                    color: Color(0xFFD1D1D1),
+                    color: neutralTheme[200]!,
                   ),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide:
-                        BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
+                        BorderSide(color: neutralTheme[100]!, width: 1.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide:
-                        BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
+                    borderSide: BorderSide(color: neutralTheme, width: 1.5),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -120,19 +119,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 decoration: InputDecoration(
                   labelText: "Confirm Password",
                   labelStyle: TextStyle(
-                    color: Color(0xFFD1D1D1),
+                    color: neutralTheme[200]!,
                   ),
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
                     borderSide:
-                        BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
+                        BorderSide(color: neutralTheme[100]!, width: 1.5),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),
-                    borderSide:
-                        BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
+                    borderSide: BorderSide(color: neutralTheme, width: 1.5),
                   ),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -154,7 +152,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF1b1b1b),
+                    backgroundColor: neutralTheme,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
                     ),
