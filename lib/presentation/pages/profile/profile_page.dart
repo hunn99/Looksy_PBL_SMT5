@@ -2,6 +2,7 @@ import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:looksy/presentation/pages/onboarding/onboarding.dart';
 import 'package:looksy/presentation/pages/profile/change_password.dart';
+import 'package:looksy/presentation/pages/profile/editpage.dart';
 import 'package:looksy/presentation/pages/profile/help_center.dart';
 import 'package:looksy/presentation/pages/profile/save.dart';
 import 'package:looksy/presentation/utils/theme.dart';
@@ -33,11 +34,11 @@ class ProfilePage extends StatelessWidget {
                   ),
                   const SizedBox(width: 16), // Jarak antara foto dan teks
                   // Kolom untuk Nama dan Email
-                  const Expanded(
+                  Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Satria Abrar',
                           style: TextStyle(
                             color: Colors.white,
@@ -48,7 +49,7 @@ class ProfilePage extends StatelessWidget {
                         Text(
                           'satria.abrar@gmail.com',
                           style: TextStyle(
-                              color: Colors.white54,
+                              color: neutralTheme[300]!,
                               fontSize: 18,
                               fontWeight: FontWeight.w500),
                         ),
@@ -60,7 +61,12 @@ class ProfilePage extends StatelessWidget {
                     icon: const Icon(IconsaxOutline.edit_2,
                         size: 24, color: Colors.white),
                     onPressed: () {
-                      // Aksi untuk edit profil
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const EditProfilePage(),
+                        ),
+                      );
                     },
                   ),
                 ],

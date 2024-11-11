@@ -10,6 +10,7 @@ class TipsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: Text(
             'Hair Tips Care',
