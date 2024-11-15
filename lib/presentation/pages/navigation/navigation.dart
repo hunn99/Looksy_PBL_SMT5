@@ -16,11 +16,11 @@ class NavigationPage extends StatefulWidget {
 class _NavigationPageState extends State<NavigationPage> {
   int _selectedIndex = 0;
   List<Widget> pages = [
-    HomePage(),
+    const HomePage(),
     TipsPage(),
-    Text('scanpage'),
-    HistoryPage(),
-    ProfilePage(),
+    const Text('scanpage'),
+    const HistoryPage(),
+    const ProfilePage(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -39,29 +39,29 @@ class _NavigationPageState extends State<NavigationPage> {
           });
         },
         selectedLabelStyle:
-            TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+            const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
         unselectedLabelStyle:
-            TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
+            const TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
         selectedItemColor: neutralTheme,
         unselectedItemColor: neutralTheme,
         showUnselectedLabels: true,
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: (_selectedIndex == 0)
-                ? Icon(IconsaxBold.home_1, size: 24, color: neutralTheme)
-                : Icon(IconsaxOutline.home, size: 24, color: neutralTheme),
+                ? const Icon(IconsaxBold.home_1, size: 24, color: neutralTheme)
+                : const Icon(IconsaxOutline.home, size: 24, color: neutralTheme),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: (_selectedIndex == 1)
-                ? Icon(IconsaxBold.magicpen, size: 24, color: neutralTheme)
-                : Icon(IconsaxOutline.magicpen, size: 24, color: neutralTheme),
+                ? const Icon(IconsaxBold.magicpen, size: 24, color: neutralTheme)
+                : const Icon(IconsaxOutline.magicpen, size: 24, color: neutralTheme),
             label: 'Tips',
           ),
           BottomNavigationBarItem(
             icon: Container(
-              padding: EdgeInsets.all(16),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(16),
+              decoration: const BoxDecoration(
                 color: neutralTheme,
                 shape: BoxShape.circle,
               ),
@@ -75,15 +75,15 @@ class _NavigationPageState extends State<NavigationPage> {
           ),
           BottomNavigationBarItem(
             icon: (_selectedIndex == 3)
-                ? Icon(IconsaxBold.document_text, size: 24, color: neutralTheme)
-                : Icon(IconsaxOutline.document_text,
+                ? const Icon(IconsaxBold.document_text, size: 24, color: neutralTheme)
+                : const Icon(IconsaxOutline.document_text,
                     size: 24, color: neutralTheme),
             label: 'History',
           ),
           BottomNavigationBarItem(
             icon: (_selectedIndex == 4)
-                ? Icon(IconsaxBold.user, size: 24, color: neutralTheme)
-                : Icon(IconsaxOutline.user, size: 24, color: neutralTheme),
+                ? const Icon(IconsaxBold.user, size: 24, color: neutralTheme)
+                : const Icon(IconsaxOutline.user, size: 24, color: neutralTheme),
             label: 'Profile',
           ),
         ],

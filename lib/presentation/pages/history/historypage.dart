@@ -14,7 +14,7 @@ class _HistoryPageState extends State<HistoryPage> {
         child: Scaffold(
       body: Center(
         child: Container(
-          child: Text('History Page'),
+          child: const Text('History Page'),
         ),
       ),
     ));

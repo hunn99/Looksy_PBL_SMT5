@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
 class SavePage extends StatelessWidget {
+  const SavePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -13,7 +15,7 @@ class SavePage extends StatelessWidget {
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
         ),
-        backgroundColor: Color(0xFF1b1b1b),
+        backgroundColor: const Color(0xFF1b1b1b),
         foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(IconsaxOutline.arrow_left, color: Colors.white),

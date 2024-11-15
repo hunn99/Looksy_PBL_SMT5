@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
 class WavyDetailPage extends StatelessWidget {
+  const WavyDetailPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

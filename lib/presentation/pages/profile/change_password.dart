@@ -2,6 +2,8 @@ import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 
 class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
+
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
@@ -16,12 +18,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Change Password',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
         ),
-        backgroundColor: Color(0xFF1b1b1b),
+        backgroundColor: const Color(0xFF1b1b1b),
         foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(IconsaxOutline.arrow_left, color: Colors.white),
@@ -48,18 +50,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               obscureText: _obscureCurrentPassword,
               decoration: InputDecoration(
                 labelText: "Current Password",
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: Color(0xFFD1D1D1),
                 ),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
+                  borderSide: const BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
+                  borderSide: const BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -81,18 +83,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               obscureText: _obscureNewPassword,
               decoration: InputDecoration(
                 labelText: "New Password",
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: Color(0xFFD1D1D1),
                 ),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
+                  borderSide: const BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
+                  borderSide: const BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -114,18 +116,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               obscureText: _obscureConfirmPassword,
               decoration: InputDecoration(
                 labelText: "Confirm Password",
-                labelStyle: TextStyle(
+                labelStyle: const TextStyle(
                   color: Color(0xFFD1D1D1),
                 ),
                 filled: true,
                 fillColor: Colors.white,
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
+                  borderSide: const BorderSide(color: Color(0xFFE7E7E7), width: 1.5),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
-                  borderSide: BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
+                  borderSide: const BorderSide(color: Color(0xFF1b1b1b), width: 1.5),
                 ),
                 suffixIcon: IconButton(
                   icon: Icon(
@@ -147,7 +149,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
               width: double.infinity,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1b1b1b),
+                  backgroundColor: const Color(0xFF1b1b1b),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),

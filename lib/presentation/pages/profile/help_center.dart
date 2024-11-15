@@ -3,17 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
 class HelpCenterPage extends StatelessWidget {
+  const HelpCenterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Help Center',
           style: TextStyle(
               fontSize: 24, fontWeight: FontWeight.w500, color: Colors.white),
         ),
-        backgroundColor: Color(0xFF1b1b1b),
+        backgroundColor: const Color(0xFF1b1b1b),
         foregroundColor: Colors.white,
         leading: IconButton(
           icon: const Icon(IconsaxOutline.arrow_left, color: Colors.white),
@@ -30,7 +32,7 @@ class HelpCenterPage extends StatelessWidget {
               decoration: InputDecoration(
                 hintText: 'Type 2 or more characters',
                 hintStyle: TextStyle(color: neutralTheme[300]!),
-                prefixIcon: Icon(IconsaxOutline.search_normal),
+                prefixIcon: const Icon(IconsaxOutline.search_normal),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(30),
                   borderSide: BorderSide.none,

@@ -38,7 +38,7 @@ class OnboardingPage extends StatelessWidget {
                     height: 40,
                   ),
                   Column(children: [
-                    Text(
+                    const Text(
                       'Find Your Perfect Look in a Snap!',
                       style: TextStyle(
                           fontSize: 44,
