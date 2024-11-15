@@ -42,7 +42,7 @@ class _NavigationPageState extends State<NavigationPage> {
       _pageController.jumpToPage(index);
     });
   }
-
+  
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -77,6 +77,7 @@ class _NavigationPageState extends State<NavigationPage> {
               HistoryPage(),
               ProfilePage(),
             ],
+
           ),
           // Menampilkan BottomNavigationBar kecuali di halaman ScanPage
           bottomNavigationBar: _selectedIndex != 2

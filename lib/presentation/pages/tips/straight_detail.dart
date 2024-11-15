@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
 class StraightDetailPage extends StatelessWidget {
+  const StraightDetailPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(

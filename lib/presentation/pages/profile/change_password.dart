@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 
 class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
+
   @override
   _ChangePasswordPageState createState() => _ChangePasswordPageState();
 }
@@ -78,6 +80,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 8),
               // New Password
               TextField(
@@ -112,6 +115,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   ),
                 ),
               ),
+
               const SizedBox(height: 8),
               // Confirm Password
               TextField(
@@ -124,6 +128,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   filled: true,
                   fillColor: Colors.white,
                   enabledBorder: OutlineInputBorder(
+
                     borderRadius: BorderRadius.circular(30),
                     borderSide:
                         BorderSide(color: neutralTheme[100]!, width: 1.5),

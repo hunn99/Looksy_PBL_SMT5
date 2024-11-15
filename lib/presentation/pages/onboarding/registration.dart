@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:looksy/presentation/utils/theme.dart';
 import 'package:looksy/presentation/widgets/button/button.dart';
+import 'package:looksy/presentation/services/auth_services.dart'; // Import AuthServices
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
@@ -13,19 +14,17 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   bool _isPasswordVisible = false;
-  bool _isConfirmPasswordVisible = false;
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
+
+  // Define TextEditingControllers
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void _togglePasswordVisibility() {
     setState(() {
       _isPasswordVisible = !_isPasswordVisible;
-    });
-  }
-
-  void _toggleConfirmPasswordVisibility() {
-    setState(() {
-      _isConfirmPasswordVisible = !_isConfirmPasswordVisible;
     });
   }
 
@@ -37,89 +36,137 @@ class _RegistrationPageState extends State<RegistrationPage> {
   void dispose() {
     _passwordFocusNode.dispose();
     _confirmPasswordFocusNode.dispose();
+    _emailController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> _register() async {
+    try {
+      await AuthServices().signUp(
+        username: _usernameController.text,
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      // Beri pesan sukses dan arahkan ke login jika registrasi berhasil
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration successful')),
+      );
+      context.push('/login');
+    } catch (e) {
+      // Tampilkan pesan error jika gagal
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to sign up: $e')),
+      );
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: GestureDetector(
-          onTap: _unfocus, // Menghilangkan fokus dari TextField saat area luar diketuk
+          onTap: _unfocus,
           child: SingleChildScrollView(
             child: Container(
               width: MediaQuery.of(context).size.width,
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              padding: EdgeInsets.all(24),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 64),
+                  const SizedBox(height: 24),
                   Image.asset(
                     'assets/images/Logo_black.png',
                     height: 40,
                   ),
-                  const SizedBox(height: 32),
+                  const SizedBox(height: 16),
                   const Text(
                     'Welcome to Looksy!',
                     style: TextStyle(
                       fontSize: 32,
-                      color: Color(0xFF1b1b1b),
+                      color: neutralTheme,
                       fontWeight: FontWeight.w500,
                       letterSpacing: -2,
                     ),
                   ),
                   const SizedBox(height: 8),
-                  const Text(
-                    'Discover your perfect hairstyle tailored to your\n'
-                    'unique face shape. Let\'s get started on your style\n'
-                    'journey!',
+                  Text(
+                    'Discover your perfect hairstyle tailored to your unique face shape. Let\'s get started on your style journey!',
                     style: TextStyle(
                       fontSize: 16,
-                      color: Color(0xFFB0B0B0),
+                      color: neutralTheme[300],
                     ),
                   ),
                   const SizedBox(height: 32),
+                  Text('Email',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  const SizedBox(height: 8),
                   TextField(
+                    controller: _emailController,
                     style: const TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 12,
                         horizontal: 16,
                       ),
-                      hintText: 'Email',
-                      hintStyle: const TextStyle(color: Color(0xFFD1D1D1), fontSize: 16),
+                      hintText: 'Enter your Email',
+                      hintStyle: TextStyle(
+                          color: neutralTheme[200]!,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFFE7E7E7)),
+                        borderSide: BorderSide(color: neutralTheme[100]!),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFF1b1b1b)),
+                        borderSide: const BorderSide(color: neutralTheme),
                       ),
                     ),
                   ),
                   const SizedBox(height: 12),
+                  Text('Username',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  const SizedBox(height: 8),
                   TextField(
+                    controller: _usernameController,
                     style: const TextStyle(fontSize: 16),
                     decoration: InputDecoration(
                       contentPadding: const EdgeInsets.symmetric(
                         vertical: 12,
                         horizontal: 16,
                       ),
-                      hintText: 'Username',
-                      hintStyle: const TextStyle(color: Color(0xFFD1D1D1), fontSize: 16),
+                      hintText: 'Enter your Username',
+                      hintStyle:
+                          TextStyle(color: neutralTheme[200]!, fontSize: 16),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFFE7E7E7)),
+                        borderSide: BorderSide(color: neutralTheme[100]!),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFF1b1b1b)),
+                        borderSide: const BorderSide(color: neutralTheme),
                       ),
                     ),
                   ),
                   const SizedBox(height: 12),
+                  Text('Password',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  const SizedBox(height: 8),
                   TextField(
+                    controller: _passwordController,
                     style: const TextStyle(fontSize: 16),
                     focusNode: _passwordFocusNode,
                     obscureText: !_isPasswordVisible,
@@ -128,86 +175,56 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         vertical: 12,
                         horizontal: 16,
                       ),
-                      hintText: 'Password',
-                      hintStyle: const TextStyle(color: Color(0xFFD1D1D1), fontSize: 16),
+                      hintText: 'Enter your Password',
+                      hintStyle:
+                          TextStyle(color: neutralTheme[200]!, fontSize: 16),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFFE7E7E7)),
+                        borderSide: BorderSide(color: neutralTheme[100]!),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFF1b1b1b)),
+                        borderSide: const BorderSide(color: neutralTheme),
                       ),
                       suffixIcon: GestureDetector(
                         onTap: _togglePasswordVisibility,
                         child: Icon(
-                          _isPasswordVisible ? IconsaxOutline.eye : IconsaxOutline.eye_slash,
+                          _isPasswordVisible
+                              ? IconsaxOutline.eye
+                              : IconsaxOutline.eye_slash,
                         ),
                       ),
                     ),
                   ),
-                  const SizedBox(height: 12),
-                  TextField(
-                    style: const TextStyle(fontSize: 16),
-                    focusNode: _confirmPasswordFocusNode,
-                    obscureText: !_isConfirmPasswordVisible,
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.symmetric(
-                        vertical: 12,
-                        horizontal: 16,
-                      ),
-                      hintText: 'Confirm Password',
-                      hintStyle: const TextStyle(color: Color(0xFFD1D1D1), fontSize: 16),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFFE7E7E7)),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(30),
-                        borderSide: const BorderSide(color: Color(0xFF1b1b1b)),
-                      ),
-                      suffixIcon: GestureDetector(
-                        onTap: _toggleConfirmPasswordVisibility,
-                        child: Icon(
-                          _isConfirmPasswordVisible ? IconsaxOutline.eye : IconsaxOutline.eye_slash,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 80),
+                  const SizedBox(height: 110),
                   Button(
                     label: 'Sign up',
-                    onTap: () {
-                      // Add action for registration
+                    onTap: () async {
+                      try {
+                        // Panggil signUp dari AuthServices
+                        await AuthServices().signUp(
+                          username: _usernameController.text,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                        );
+                        // Menangani navigasi atau pesan sukses jika diperlukan
+                        // Misalnya, arahkan ke halaman login setelah registrasi berhasil
+                        context.push('/login');
+                      } catch (e) {
+                        // Tangani error jika signUp gagal
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text('Failed to sign up: $e'),
+                        ));
+                      }
                     },
                     isDisabled: false,
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12, horizontal: 16),
                     textSize: 16,
                     colorText: Colors.white,
-                    colorBackground: Color(0xFF1b1b1b),
+                    colorBackground: neutralTheme,
                   ),
                   const SizedBox(height: 12),
-                  Button(
-                    label: 'Sign up with Google',
-                    onTap: () {
-                      // Add action for Google sign up
-                    },
-                    isDisabled: false,
-                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                    textSize: 16,
-                    colorText: Color(0xFF1b1b1b),
-                    colorBackground: Colors.white,
-                    borderColor: Color(0xFF1b1b1b),
-                    icon: Container(
-                      height: 20,
-                      width: 20,
-                      child: Image.asset(
-                        'assets/images/google.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -215,19 +232,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         "Already have an account? ",
                         style: TextStyle(
                           fontSize: 16,
-                          color: Color(0xFF1b1b1b),
-                          ), // Ukuran font diubah menjadi 11
+                          color: neutralTheme,
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {
                           context.push('/login');
                         },
                         child: const Text(
-                          'Log in',
+                          'Login',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16, // Ukuran font diubah menjadi 11
-                            color: Color(0xFF1b1b1b),
+                            fontSize: 16,
+                            color: neutralTheme,
                           ),
                         ),
                       ),

@@ -6,13 +6,15 @@ import 'curly_detail.dart';
 import 'frizz_detail.dart';
 
 class TipsPage extends StatelessWidget {
+  const TipsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Hair Tips Care',
             style: TextStyle(
                 fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
@@ -32,8 +34,8 @@ class TipsPage extends StatelessWidget {
             children: [
               _buildTipCard(context, "Straight", StraightDetailPage()),
               _buildTipCard(context, "Wavy", WavyDetailPage()),
-              _buildTipCard(context, "Curly", CurlyDetailPage()),
-              _buildTipCard(context, "Frizzy", FrizzDetailPage()),
+              _buildTipCard(context, "Curly", const CurlyDetailPage()),
+              _buildTipCard(context, "Frizzy", const FrizzDetailPage()),
             ],
           ),
         ),
@@ -57,7 +59,7 @@ class TipsPage extends StatelessWidget {
           children: [
             Expanded(
               child: ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
                 child: Image.asset(
                   "assets/images/$title.jpg",
                   fit: BoxFit.cover,
@@ -73,10 +75,10 @@ class TipsPage extends StatelessWidget {
                     "Hair Care Tips",
                     style: TextStyle(fontSize: 12, color: neutralTheme[300]!),
                   ),
-                  SizedBox(height: 4),
+                  const SizedBox(height: 4),
                   Text(
                     title,
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ],
               ),

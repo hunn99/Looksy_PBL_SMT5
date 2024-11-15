@@ -41,7 +41,7 @@ final GoRouter _router = GoRouter(
   ],
   redirect: (context, state) {
     if (state.uri.toString() == '/') {
-      return '/home';
+      return '/onboarding';
     }
     return null;
   },
