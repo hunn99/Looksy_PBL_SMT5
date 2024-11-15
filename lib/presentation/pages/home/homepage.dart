@@ -14,6 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    final height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -53,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   padding: EdgeInsets.all(24),
-                  height: 480,
+                  height: height * 0.62,
                   width: double.maxFinite,
                   decoration: BoxDecoration(
                     color: Colors.white,
