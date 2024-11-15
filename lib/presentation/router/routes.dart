@@ -5,6 +5,7 @@ import 'package:looksy/presentation/pages/onboarding/login.dart';
 import 'package:looksy/presentation/pages/onboarding/onboarding.dart';
 import 'package:looksy/presentation/pages/onboarding/otp.dart';
 import 'package:looksy/presentation/pages/onboarding/registration.dart';
+import 'package:looksy/presentation/pages/scan/scan.dart';
 
 final GoRouter _router = GoRouter(
   routes: [
@@ -32,6 +33,10 @@ final GoRouter _router = GoRouter(
     GoRoute(
       path: '/home',
       builder: (context, state) => const NavigationPage(),
+    ),
+    GoRoute(
+      path: '/scan',
+      builder: (context, state) => const ScanPage(),
     ),
   ],
   redirect: (context, state) {
