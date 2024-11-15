@@ -1,6 +1,6 @@
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
-import 'package:looksy/presentation/pages/onboarding/onboarding.dart';
+// import 'package:looksy/presentation/pages/onboarding/onboarding.dart';
 import 'package:looksy/presentation/pages/profile/change_password.dart';
 import 'package:looksy/presentation/pages/profile/editpage.dart';
 import 'package:looksy/presentation/pages/profile/help_center.dart';
