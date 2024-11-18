@@ -32,6 +32,21 @@ class _LoginPageState extends State<LoginPage> {
 
   // Fungsi untuk login
   Future<void> _handleLogin() async {
+    // Cek apakah email dan password sudah diisi
+    if (_emailController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Harap isi email terlebih dahulu!')),
+      );
+      return;
+    }
+
+    if (_passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Harap isi password terlebih dahulu!')),
+      );
+      return;
+    }
+
     setState(() {
       _isLoading = true;
     });
