@@ -71,6 +71,7 @@ class AuthServices {
     await prefs.setString('auth_token', token);
   }
 
+  // Fungsi untuk logout
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('auth_token');
@@ -97,5 +98,4 @@ class AuthServices {
     }
   }
 
-  
 }
