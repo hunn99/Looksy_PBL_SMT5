@@ -14,6 +14,7 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   bool _isPasswordVisible = false;
+  bool _isLoading = false;  // Menambahkan status loading
   final FocusNode _passwordFocusNode = FocusNode();
   final FocusNode _confirmPasswordFocusNode = FocusNode();
 
@@ -43,6 +44,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   Future<void> _register() async {
+    setState(() {
+      _isLoading = true; // Set loading to true when the registration starts
+    });
+
     try {
       await AuthServices().signUp(
         username: _usernameController.text,
@@ -60,6 +65,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to sign up: $e')),
       );
+    } finally {
+      setState(() {
+        _isLoading = false; // Set loading to false once the registration is done
+      });
     }
   }
 
@@ -198,28 +207,28 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                   const SizedBox(height: 110),
                   Button(
-                    label: 'Sign up',
-                    onTap: () async {
-                      try {
-                        // Panggil signUp dari AuthServices
-                        await AuthServices().signUp(
-                          username: _usernameController.text,
-                          email: _emailController.text,
-                          password: _passwordController.text,
-                        );
-                        // Menangani navigasi atau pesan sukses jika diperlukan
-                        // Misalnya, arahkan ke halaman login setelah registrasi berhasil
-                        context.push('/login');
-                      } catch (e) {
-                        // Tangani error jika signUp gagal
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text('Failed to sign up: $e'),
-                        ));
-                      }
-                    },
-                    isDisabled: false,
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 16),
+                    label: _isLoading ? 'Signing up...' : 'Sign up', // Ganti teks tombol saat loading
+                    onTap: _isLoading // Nonaktifkan tombol saat loading
+                        ? null
+                        : () async {
+                            // Validasi input
+                            if (_emailController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Harap isi email terlebih dahulu!')),
+                              );
+                            } else if (_usernameController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Harap isi username terlebih dahulu!')),
+                              );
+                            } else if (_passwordController.text.isEmpty) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('Harap isi password terlebih dahulu!')),
+                              );
+                            } else {
+                              await _register(); // Panggil fungsi _register
+                            }
+                          },
+                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
                     textSize: 16,
                     colorText: Colors.white,
                     colorBackground: neutralTheme,
