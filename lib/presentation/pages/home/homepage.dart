@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   final OrderServices _orderServices = OrderServices();
   List<Map<String, dynamic>> services = []; // Layanan akan dimuat dari database
   bool isLoading = true;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -34,6 +37,17 @@ class _HomePageState extends State<HomePage> {
     _loadUsername();
     _loadServices();
     _bookNow();
+
+    // Update status setiap menit
+    _timer = Timer.periodic(const Duration(minutes: 1), (timer) {
+      setState(() {}); // Memperbarui widget untuk mengevaluasi ulang isOpen
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // Bersihkan timer saat widget dihapus
+    super.dispose();
   }
 
   Future<void> _checkAuthStatus() async {
@@ -62,7 +76,8 @@ class _HomePageState extends State<HomePage> {
   // Ambil username dari SharedPreferences dan ubah huruf pertama menjadi kapital
   Future<void> _loadUsername() async {
     final prefs = await SharedPreferences.getInstance();
-    final storedUsername = prefs.getString('username') ?? 'user'; // Default 'user' jika tidak ada
+    final storedUsername =
+        prefs.getString('username') ?? 'user'; // Default 'user' jika tidak ada
     setState(() {
       // Ubah huruf pertama menjadi kapital
       username = _capitalizeFirstLetter(storedUsername);
@@ -162,7 +177,8 @@ class _HomePageState extends State<HomePage> {
                                     if (value) {
                                       pickedServices.add(service);
                                     } else {
-                                      pickedServices.removeWhere((item) => item["id"] == service["id"]);
+                                      pickedServices.removeWhere((item) =>
+                                          item["id"] == service["id"]);
                                     }
                                     _calculateTotalPayment();
                                   });
@@ -278,8 +294,10 @@ class _HomePageState extends State<HomePage> {
       }
 
       // Format date dan time ke string
-      final formattedDate = "${selectedDate!.year}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}";
-      final formattedTime = "${selectedTime!.hour.toString().padLeft(2, '0')}:${selectedTime!.minute.toString().padLeft(2, '0')}";
+      final formattedDate =
+          "${selectedDate!.year}-${selectedDate!.month.toString().padLeft(2, '0')}-${selectedDate!.day.toString().padLeft(2, '0')}";
+      final formattedTime =
+          "${selectedTime!.hour.toString().padLeft(2, '0')}:${selectedTime!.minute.toString().padLeft(2, '0')}";
 
       // Panggil fungsi createOrder dengan parameter pickedServices
       await _orderServices.createOrder(
@@ -302,6 +320,8 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
+    final bool isOpen = isBarberShopOpen();
+
     return SafeArea(
       child: Scaffold(
         body: SizedBox(
@@ -321,7 +341,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 16),
                     Text(
                       'Hi, $username 👋',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 28,
                           letterSpacing: -1,
                           fontWeight: FontWeight.w500,
@@ -351,78 +371,118 @@ class _HomePageState extends State<HomePage> {
                       topRight: Radius.circular(24),
                     ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        height: 112,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(24),
-                          border: Border.all(color: neutralTheme[100]!),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: double.infinity,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16),
-                                image: const DecorationImage(
-                                  image: NetworkImage(
-                                    'https://lh5.googleusercontent.com/p/AF1QipMM4gOpnqmBkrFlMo11kk4tCFi_4DVq6nVJ6h9B=w114-h114-n-k-no',
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          height: 112,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            border: Border.all(color: neutralTheme[100]!),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: double.infinity,
+                                width: 100,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                  image: const DecorationImage(
+                                    image: NetworkImage(
+                                      'https://lh5.googleusercontent.com/p/AF1QipMM4gOpnqmBkrFlMo11kk4tCFi_4DVq6nVJ6h9B=w114-h114-n-k-no',
+                                    ),
+                                    fit: BoxFit.cover,
                                   ),
-                                  fit: BoxFit.cover,
                                 ),
                               ),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  const Text(
-                                    'Berkah Barbershop',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: neutralTheme,
+                              const SizedBox(width: 16),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      'Berkah Barbershop',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: neutralTheme,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                  const SizedBox(height: 4),
-                                  Text(
-                                    'Jl. Danau Toba No.6, Malang',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                      color: neutralTheme[300],
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      'Jl. Danau Toba No.6, Malang',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                        color: neutralTheme[300]!,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
                                     ),
-                                    overflow: TextOverflow.ellipsis,
-                                    maxLines: 1,
-                                  ),
-                                ],
+                                    const SizedBox(height: 8),
+                                    Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8, vertical: 4),
+                                          decoration: BoxDecoration(
+                                            color: isOpen
+                                                ? greenTheme[100]
+                                                : redTheme[100],
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                          child: Text(
+                                            isOpen ? 'Open' : 'Close',
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: isOpen
+                                                  ? greenTheme[600]
+                                                  : redTheme[600],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 20),
+                                        Text(
+                                          isOpen
+                                              ? 'Closes 22:00'
+                                              : 'Opens at 09:00',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w500,
+                                            color: neutralTheme[300],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 14),
-                      const Text(
-                        'Schedule Your Shave',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: neutralTheme),
-                      ),
-                      const SizedBox(height: 16),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: neutralTheme[100]!),
-                          borderRadius: BorderRadius.circular(24),
+                        const SizedBox(height: 14),
+                        const Text(
+                          'Schedule Your Shave',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: neutralTheme),
                         ),
-                        child: Column(children: [
+                        const SizedBox(height: 16),
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: neutralTheme[100]!),
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: Column(children: [
                             GestureDetector(
                               onTap: () => _selectDate(context),
                               child: Container(
@@ -515,35 +575,38 @@ class _HomePageState extends State<HomePage> {
                                 border: Border.all(color: neutralTheme[100]!),
                                 borderRadius: BorderRadius.circular(100),
                               ),
-                              child: Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () => _openServiceSelection(context),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            const Icon(IconsaxBold.scissor),
-                                            const SizedBox(
-                                              width: 8,
-                                            ),
-                                            Text(
-                                              _getPickedServicesText(),
-                                              style: TextStyle(
+                              child: GestureDetector(
+                                onTap: () => _openServiceSelection(context),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          const Icon(IconsaxBold.scissor),
+                                          const SizedBox(width: 8),
+                                          Expanded(
+                                            child: SingleChildScrollView(
+                                              scrollDirection: Axis.horizontal,
+                                              child: Text(
+                                                _getPickedServicesText(),
+                                                style: TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500,
                                                   color: pickedServices.isEmpty
                                                       ? neutralTheme[300]
-                                                      : neutralTheme),
+                                                      : neutralTheme,
+                                                ),
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                        const Icon(IconsaxOutline.arrow_down_1)
-                                      ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                    const Icon(IconsaxOutline.arrow_down_1),
+                                  ],
+                                ),
                               ),
                             ),
                             const SizedBox(
@@ -559,8 +622,9 @@ class _HomePageState extends State<HomePage> {
                               colorText: Colors.white,
                             )
                           ]),
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -570,4 +634,17 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+bool isBarberShopOpen() {
+  final now = DateTime.now();
+  final start = TimeOfDay(hour: 9, minute: 0); // Jam buka
+  final end = TimeOfDay(hour: 21, minute: 59); // Jam tutup
+
+  // Konversi waktu ke menit sejak tengah malam
+  int nowMinutes = now.hour * 60 + now.minute;
+  int startMinutes = start.hour * 60 + start.minute;
+  int endMinutes = end.hour * 60 + end.minute;
+
+  return nowMinutes >= startMinutes && nowMinutes <= endMinutes;
 }
