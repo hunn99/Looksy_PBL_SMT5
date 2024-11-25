@@ -1,7 +1,10 @@
 import 'package:ficonsax/ficonsax.dart';
 import 'package:flutter/material.dart';
 import 'package:looksy/presentation/utils/theme.dart';
-import 'package:looksy/presentation/widgets/card/card_hirtory.dart';
+
+import 'package:looksy/presentation/widgets/button/card/history_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:looksy/presentation/services/history_services.dart';
 
 class HistoryPage extends StatefulWidget {
   const HistoryPage({Key? key}) : super(key: key);
@@ -12,46 +15,51 @@ class HistoryPage extends StatefulWidget {
 
 class _HistoryPageState extends State<HistoryPage> {
   // Daftar orderan
-  List<Map<String, dynamic>> orders = [
-    {
-      'services': 'Premium Haircut, Hair Color',
-      'date': '15 Sep 2023',
-      'time': '06:30 AM',
-      'price': 'Rp. 175.000',
-      'status': 'On Process',
-      'cancelable': true,
-    },
-    {
-      'services': 'Premium Haircut, Hair Color',
-      'date': '15 Sep 2023',
-      'time': '06:30 AM',
-      'price': 'Rp. 175.000',
-      'status': 'On Process',
-      'cancelable': true,
-    },
-    {
-      'services': 'Premium Haircut, Hair Color, Hair Color, Shave',
-      'date': '12 Sep 2023',
-      'time': '06:30 AM',
-      'price': 'Rp. 175.000',
-      'status': 'Canceled',
-      'cancelable': true,
-    },
-    {
-      'services': 'Premium Haircut',
-      'date': '12 Aug 2023',
-      'time': '07:00 AM',
-      'price': 'Rp. 40.000',
-      'status': 'Finished',
-      'cancelable': true,
-    },
-  ];
+
+  List<Map<String, dynamic>> orders = [];
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchHistory();
+  }
+
+  Future<void> fetchHistory() async {
+    try {
+      final data = await HistoryServices.getHistory();
+      setState(() {
+        orders = data;
+        orders.sort((a, b) => b['date'].compareTo(a['date']));
+        isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to load history: $e')),
+      );
+    }
+  }
 
   // Fungsi untuk mengubah status menjadi 'Canceled'
-  void cancelOrder(int index) {
-    setState(() {
-      orders[index]['status'] = 'Canceled';
-    });
+  void cancelOrder(int index) async {
+    final orderId = orders[index]['id'].toString(); // Pastikan ID tersedia di data order
+
+    try {
+      await HistoryServices.cancelOrder(orderId);
+      setState(() {
+        orders[index]['status'] = 'Canceled';
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Order canceled successfully')),
+      );
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to cancel order: $e')),
+      );
+    }
   }
 
   @override
@@ -71,35 +79,37 @@ class _HistoryPageState extends State<HistoryPage> {
           backgroundColor: neutralTheme,
           toolbarHeight: 80,
         ),
-        body: orders.isEmpty
-            ? NoOrdersFound()
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: orders
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => Column(
-                            children: [
-                              HistoryCard(
-                                services: entry.value['services'],
-                                date: entry.value['date'],
-                                time: entry.value['time'],
-                                price: entry.value['price'],
-                                status: entry.value['status'],
-                                cancelable: entry.value['cancelable'],
-                                onCancel: () => cancelOrder(entry.key),
+        body: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : orders.isEmpty
+                ? NoOrdersFound()
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        children: orders
+                            .asMap()
+                            .entries
+                            .map(
+                              (entry) => Column(
+                                children: [
+                                  HistoryCard(
+                                    services: entry.value['services'],
+                                    date: entry.value['date'],
+                                    time: entry.value['time'],
+                                    price: entry.value['price'],
+                                    status: entry.value['status'],
+                                    cancelable: entry.value['cancelable'],
+                                    onCancel: () => cancelOrder(entry.key),
+                                  ),
+                                  const SizedBox(height: 12),
+                                ],
                               ),
-                              const SizedBox(height: 12),
-                            ],
-                          ),
-                        )
-                        .toList(),
+                            )
+                            .toList(),
+                      ),
+                    ),
                   ),
-                ),
-              ),
       ),
     );
   }
